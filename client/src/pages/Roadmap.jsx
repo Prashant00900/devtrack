@@ -33,15 +33,17 @@ function Roadmap() {
     }
   };
 
-  if (loading) return <p>Loading...</p>;
+  if (loading) return <p className="text-slate-400">Loading...</p>;
 
   if (error && !data) {
     return (
       <div>
         <h1 className="text-3xl font-bold mb-4">Learning Roadmap</h1>
-        <p className="bg-red-500/20 text-red-300 p-3 rounded mb-4">{error}</p>
-        <Link to="/target-role" className="text-blue-400 underline">
-          Target Role select karo
+        <p className="bg-red-500/10 border border-red-500/30 text-red-300 p-3 rounded-lg mb-4">
+          {error}
+        </p>
+        <Link to="/target-role" className="text-blue-400 hover:underline">
+          Select a target role →
         </Link>
       </div>
     );
@@ -53,31 +55,41 @@ function Roadmap() {
 
   return (
     <div>
-      <h1 className="text-3xl font-bold mb-1">Learning Roadmap</h1>
-      <p className="text-slate-400 mb-6">
-        Target: {data.role.title} · Current match: {data.matchPercentage}%
-      </p>
+      <div className="mb-6">
+        <h1 className="text-3xl font-bold">Learning Roadmap</h1>
+        <p className="text-slate-400 mt-1">
+          Target role: <span className="text-slate-200">{data.role.title}</span>{" "}
+          · Current match {data.matchPercentage}%
+        </p>
+      </div>
 
-      {error && <p className="bg-red-500/20 text-red-300 p-2 rounded mb-4">{error}</p>}
+      {error && (
+        <p className="bg-red-500/10 border border-red-500/30 text-red-300 p-3 rounded-lg mb-4">
+          {error}
+        </p>
+      )}
 
       {total === 0 ? (
-        <p className="bg-green-500/20 text-green-300 p-4 rounded">
-          Tumhari saari required skills ready hain 🎉
-        </p>
+        <div className="bg-green-500/10 border border-green-500/30 text-green-300 p-6 rounded-2xl text-center">
+          All required skills are ready 🎉
+        </div>
       ) : (
         <>
-          <div className="bg-slate-800 p-4 rounded-xl mb-6">
+          <div className="bg-slate-900 border border-slate-800 rounded-2xl p-5 mb-6">
             <div className="flex items-center justify-between mb-2">
-              <span className="text-slate-300">Progress</span>
+              <span className="text-slate-300">Your progress</span>
               <span className="font-semibold">
                 {doneCount} / {total} done ({progress}%)
               </span>
             </div>
-            <div className="w-full h-3 bg-slate-700 rounded-full overflow-hidden">
-              <div className="h-full bg-green-500" style={{ width: `${progress}%` }} />
+            <div className="w-full h-3 bg-slate-800 rounded-full overflow-hidden">
+              <div
+                className="h-full bg-green-500 transition-all"
+                style={{ width: `${progress}%` }}
+              />
             </div>
-            <p className="text-xs text-slate-400 mt-2">
-              Tick sirf tumhare tracking ke liye hai. Gap Analysis tab badlega jab tum Skills page par level badhaoge.
+            <p className="text-xs text-slate-500 mt-3">
+              Ticks are for your own tracking. Your match % changes when you update skill levels on the Skills page.
             </p>
           </div>
 
@@ -85,36 +97,62 @@ function Roadmap() {
             {data.roadmap.map((item) => (
               <div
                 key={item.skillId}
-                className={`bg-slate-800 p-4 rounded-xl flex items-center gap-4 ${
-                  item.done ? "opacity-60" : ""
+                className={`bg-slate-900 border border-slate-800 rounded-2xl p-4 flex items-center gap-4 transition ${
+                  item.done ? "opacity-50" : ""
                 }`}
               >
-                <input
-                  type="checkbox"
-                  checked={item.done}
-                  onChange={() => handleToggle(item)}
-                  className="w-5 h-5 shrink-0 cursor-pointer"
-                />
-
-                <div className="flex-1">
-                  <p className={`font-semibold ${item.done ? "line-through" : ""}`}>
-                    {item.order}. {item.title}
-                  </p>
-                  <p className="text-xs text-slate-400">
-                    Level {item.fromLevel} → {item.toLevel} ·{" "}
-                    {item.importance === "must" ? "must have" : "good to have"} ·{" "}
-                    {item.category}
-                  </p>
+                <div
+                  className={`w-10 h-10 shrink-0 rounded-full flex items-center justify-center font-bold ${
+                    item.done ? "bg-green-600" : "bg-blue-600"
+                  }`}
+                >
+                  {item.done ? "✓" : item.order}
                 </div>
 
-                <a
-                  href={item.searchUrl}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="bg-slate-700 hover:bg-slate-600 px-3 py-1 rounded text-sm"
-                >
-                  Learn ↗
-                </a>
+                <div className="flex-1 min-w-0">
+                  <p
+                    className={`font-semibold ${
+                      item.done ? "line-through" : ""
+                    }`}
+                  >
+                    {item.title}
+                  </p>
+                  <div className="flex flex-wrap items-center gap-2 mt-1">
+                    <span className="text-xs bg-slate-800 text-slate-300 px-2 py-0.5 rounded-full">
+                      Level {item.fromLevel} → {item.toLevel}
+                    </span>
+                    <span
+                      className={`text-xs px-2 py-0.5 rounded-full ${
+                        item.importance === "must"
+                          ? "bg-red-500/15 text-red-300"
+                          : "bg-slate-800 text-slate-400"
+                      }`}
+                    >
+                      {item.importance === "must" ? "Must have" : "Good to have"}
+                    </span>
+                    <span className="text-xs text-slate-500">
+                      {item.category}
+                    </span>
+                  </div>
+                </div>
+
+                <div className="flex items-center gap-3 shrink-0">
+                  <a
+                    href={item.searchUrl}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="bg-slate-800 hover:bg-slate-700 px-3 py-1.5 rounded-lg text-sm transition"
+                  >
+                    Learn ↗
+                  </a>
+                  <input
+                    type="checkbox"
+                    checked={item.done}
+                    onChange={() => handleToggle(item)}
+                    className="w-5 h-5 cursor-pointer accent-green-500"
+                    aria-label="Mark as done"
+                  />
+                </div>
               </div>
             ))}
           </div>
