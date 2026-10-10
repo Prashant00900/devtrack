@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link, Navigate, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
+import AuthLayout from "../components/AuthLayout";
 
 function Login() {
   const { user, login } = useAuth();
@@ -28,51 +29,61 @@ function Login() {
     }
   };
 
-  return (
-    <div className="min-h-screen flex items-center justify-center bg-slate-900 px-4">
-      <form
-        onSubmit={handleSubmit}
-        className="w-full max-w-sm bg-slate-800 p-6 rounded-xl text-white space-y-4"
-      >
-        <h1 className="text-2xl font-bold text-center">Login to DevTrack</h1>
+  const inputClass =
+    "w-full px-3 py-2.5 rounded-lg bg-slate-900 border border-slate-700 focus:border-blue-500 outline-none";
 
+  return (
+    <AuthLayout
+      title="Welcome back"
+      subtitle="Login to continue tracking your career."
+    >
+      <form onSubmit={handleSubmit} className="space-y-4">
         {error && (
-          <p className="bg-red-500/20 text-red-300 text-sm p-2 rounded">{error}</p>
+          <p className="bg-red-500/10 border border-red-500/30 text-red-300 text-sm p-3 rounded-lg">
+            {error}
+          </p>
         )}
 
-        <input
-          type="email"
-          placeholder="Email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          required
-          className="w-full p-2 rounded bg-slate-700 outline-none"
-        />
-        <input
-          type="password"
-          placeholder="Password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          required
-          className="w-full p-2 rounded bg-slate-700 outline-none"
-        />
+        <div>
+          <label className="block text-sm text-slate-300 mb-1">Email</label>
+          <input
+            type="email"
+            placeholder="you@example.com"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+            className={inputClass}
+          />
+        </div>
+
+        <div>
+          <label className="block text-sm text-slate-300 mb-1">Password</label>
+          <input
+            type="password"
+            placeholder="Your password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+            className={inputClass}
+          />
+        </div>
 
         <button
           type="submit"
           disabled={submitting}
-          className="w-full bg-blue-600 hover:bg-blue-500 p-2 rounded font-semibold disabled:opacity-50"
+          className="w-full bg-blue-600 hover:bg-blue-500 py-2.5 rounded-lg font-semibold disabled:opacity-50 transition"
         >
           {submitting ? "Logging in..." : "Login"}
         </button>
 
         <p className="text-sm text-center text-slate-400">
-          Account nahi hai?{" "}
-          <Link to="/register" className="text-blue-400">
-            Register karo
+          Don't have an account?{" "}
+          <Link to="/register" className="text-blue-400 hover:underline">
+            Register
           </Link>
         </p>
       </form>
-    </div>
+    </AuthLayout>
   );
 }
 
