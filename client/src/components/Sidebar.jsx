@@ -28,7 +28,7 @@ const groups = [
   },
   {
     title: "Insights",
-    links: [{ to: "/github", label: "GitHub", icon: "🐙" }],
+    links: [{ to: "/github", label: "GitHub & LinkedIn", icon: "🐙" }],
   },
 ];
 

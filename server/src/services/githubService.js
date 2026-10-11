@@ -1,4 +1,6 @@
 const GITHUB_API = "https://api.github.com";
+const CACHE_MS = 10 * 60 * 1000; // 10 minute
+const cache = new Map();
 
 const ghFetch = async (path) => {
   const headers = {
@@ -18,6 +20,12 @@ const ghFetch = async (path) => {
     throw err;
   }
 
+  if (res.status === 401) {
+    const err = new Error("GITHUB_TOKEN galat ya expire ho gaya hai.");
+    err.status = 502;
+    throw err;
+  }
+
   if (res.status === 403 || res.status === 429) {
     const err = new Error("GitHub rate limit ho gayi. Thodi der baad try karo.");
     err.status = 429;
@@ -33,7 +41,7 @@ const ghFetch = async (path) => {
   return res.json();
 };
 
-export const getGithubSummary = async (username) => {
+const buildSummary = async (username) => {
   const u = encodeURIComponent(username);
 
   const [user, repos, events] = await Promise.all([
@@ -121,4 +129,23 @@ export const getGithubSummary = async (username) => {
     topRepos,
     activity: activity.map(({ label, count }) => ({ label, count })),
   };
+};
+
+export const getGithubSummary = async (username) => {
+  const key = username.toLowerCase();
+  const cached = cache.get(key);
+
+  if (cached && cached.expires > Date.now()) {
+    return cached.data;
+  }
+
+  try {
+    const data = await buildSummary(username);
+    cache.set(key, { data, expires: Date.now() + CACHE_MS });
+    return data;
+  } catch (error) {
+    // Rate limit ho gayi ho to purana data dikha do
+    if (cached && error.status === 429) return cached.data;
+    throw error;
+  }
 };
