@@ -4,21 +4,37 @@
 
 Developers keep their skills, projects, certifications and GitHub activity in different places. DevTrack brings them together and answers three questions: **What skills do I have? What am I missing for my target role? What should I learn next?**
 
+## Live Demo
+
+🔗 **https://devtrack-xi-gray.vercel.app**
+
+> The backend runs on a free plan, so the first request after inactivity can take 30-60 seconds.
+
+## Screenshots
+
+| Dashboard | Gap Analysis |
+|---|---|
+| ![Dashboard](docs/screenshots/dashboard.png) | ![Gap Analysis](docs/screenshots/gap-analysis.png) |
+
+| Roadmap | GitHub & LinkedIn |
+|---|---|
+| ![Roadmap](docs/screenshots/roadmap.png) | ![GitHub](docs/screenshots/github.png) |
+
 ## Features
 
 - **Auth:** JWT register/login with bcrypt password hashing and protected routes
-- **Developer profile:** headline, bio, experience level, GitHub username
+- **Developer profile:** headline, bio, experience level, GitHub and LinkedIn links
 - **Skills:** master skill list with a 1-5 level for each skill
 - **Projects:** tech stack, GitHub link, live link, status (add, edit, delete)
+- **Certifications:** add and manage certifications
 - **Target role:** pick a role such as MERN Stack Developer
 - **Skill gap analysis:** role match percentage with strong, weak and missing skills
 - **Learning roadmap:** ordered learning plan with progress tracking
-- **Dashboard:** analytics with Recharts (skill levels, skills by category)
-- **GitHub integration:** repos, languages and weekly activity from the GitHub API
+- **Dashboard:** analytics with Recharts (skill levels, skills by category) and a personalised next step
+- **GitHub & LinkedIn:** repos, languages and weekly activity from the GitHub API (cached on the server), plus a LinkedIn profile card
 - **Project-to-skill mapping:** finds skills used in projects and syncs them to the profile
 - **AI career analysis:** summary, strengths, next steps, project ideas and interview tips (Claude API, with a rule-based fallback when no API key is set)
 - **Employee mode:** promotion readiness score for the next level
-- **Certifications:** add and manage certifications
 
 ## Tech Stack
 
@@ -26,9 +42,10 @@ Developers keep their skills, projects, certifications and GitHub activity in di
 |---|---|
 | Frontend | React, Vite, Tailwind CSS, React Router, Axios, Recharts |
 | Backend | Node.js, Express.js |
-| Database | MongoDB, Mongoose |
+| Database | MongoDB Atlas, Mongoose |
 | Auth | JWT, bcryptjs |
 | Integrations | GitHub REST API, Anthropic API (optional) |
+| Deployment | Vercel (frontend), Render (backend) |
 
 ## Project Structure
 
@@ -37,7 +54,7 @@ devtrack/
 ├── client/                # React app
 │   └── src/
 │       ├── api/           # Axios instance with token interceptor
-│       ├── components/    # Navbar, Layout, ProtectedRoute
+│       ├── components/    # Sidebar, Layout, AuthLayout, ProtectedRoute
 │       ├── context/       # AuthContext
 │       └── pages/         # Dashboard, Skills, Projects, GapAnalysis, ...
 └── server/                # Express API
@@ -98,6 +115,8 @@ npm run dev
 ```
 Open `http://localhost:5173`.
 
+For a deployed backend, set `VITE_API_URL` in the frontend environment (for example `https://your-api.onrender.com/api`).
+
 ## API Overview
 
 | Area | Endpoints |
@@ -121,19 +140,12 @@ All routes except register and login are protected and need the header `Authoriz
 
 Each role has required skills with a minimum level and an importance (`must` has weight 2, `good` has weight 1). For every required skill the score is `min(userLevel / minLevel, 1)`, and the match percentage is the weighted average. Skills at or above the required level are **strong**, below it are **weak**, and skills the user does not have are **missing**.
 
-## Screenshots
-
-_Add screenshots here (Dashboard, Gap Analysis, Roadmap, GitHub)._
-
-## Live Demo
-
-_Coming soon._
-
 ## Roadmap
 
-- [x] Auth, profile, skills, projects
+- [x] Auth, profile, skills, projects, certifications
 - [x] Skill gap analysis and learning roadmap
 - [x] Dashboard, GitHub integration, AI analysis, employee mode
+- [x] Deployment (Vercel, Render, MongoDB Atlas)
 - [ ] Mentor mode
 - [ ] Company and team skill matrix
 - [ ] Real-time notifications (Socket.IO)
