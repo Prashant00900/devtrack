@@ -3,17 +3,17 @@ import { useAuth } from "../context/AuthContext";
 
 const groups = [
   {
-    title: "Overview",
+    title: "Home",
     links: [{ to: "/dashboard", label: "Dashboard", icon: "📊" }],
   },
   {
     title: "My Profile",
     links: [
+      { to: "/profile", label: "Profile", icon: "👤" },
       { to: "/skills", label: "Skills", icon: "🛠️" },
       { to: "/projects", label: "Projects", icon: "📁" },
       { to: "/certifications", label: "Certifications", icon: "🏅" },
       { to: "/skill-map", label: "Skill Map", icon: "🗺️" },
-      { to: "/profile", label: "Profile", icon: "👤" },
     ],
   },
   {
@@ -23,12 +23,24 @@ const groups = [
       { to: "/gap-analysis", label: "Gap Analysis", icon: "📈" },
       { to: "/roadmap", label: "Roadmap", icon: "🧭" },
       { to: "/promotion", label: "Promotion", icon: "🚀" },
-      { to: "/ai-analysis", label: "AI Analysis", icon: "✨" },
     ],
+  },
+  {
+    title: "Learn & Prepare",
+    links: [{ to: "/learn", label: "Learning Hub", icon: "📚" }],
+  },
+  {
+    title: "AI Tools",
+    links: [{ to: "/ai-analysis", label: "AI Analysis", icon: "✨" }],
   },
   {
     title: "Insights",
     links: [{ to: "/github", label: "GitHub & LinkedIn", icon: "🐙" }],
+  },
+  {
+    title: "Admin",
+    adminOnly: true,
+    links: [{ to: "/admin", label: "Admin Panel", icon: "🛡️" }],
   },
 ];
 
@@ -41,6 +53,10 @@ function Sidebar({ open, onClose }) {
         ? "bg-blue-600 text-white"
         : "text-slate-300 hover:bg-slate-800 hover:text-white"
     }`;
+
+  const visibleGroups = groups.filter(
+    (g) => !g.adminOnly || user?.role === "admin"
+  );
 
   return (
     <>
@@ -64,7 +80,7 @@ function Sidebar({ open, onClose }) {
         </div>
 
         <nav className="flex-1 overflow-y-auto px-3 py-4 space-y-5">
-          {groups.map((group) => (
+          {visibleGroups.map((group) => (
             <div key={group.title}>
               <p className="px-3 mb-2 text-xs font-semibold uppercase tracking-wider text-slate-500">
                 {group.title}
@@ -88,9 +104,18 @@ function Sidebar({ open, onClose }) {
 
         <div className="border-t border-slate-800 p-4">
           <div className="flex items-center gap-3 mb-3">
-            <div className="w-9 h-9 rounded-full bg-blue-600 flex items-center justify-center font-bold">
-              {user?.name?.charAt(0).toUpperCase()}
-            </div>
+            {user?.avatar ? (
+              <img
+                src={user.avatar}
+                alt={user.name}
+                referrerPolicy="no-referrer"
+                className="w-9 h-9 rounded-full"
+              />
+            ) : (
+              <div className="w-9 h-9 rounded-full bg-blue-600 flex items-center justify-center font-bold">
+                {user?.name?.charAt(0).toUpperCase()}
+              </div>
+            )}
             <div className="min-w-0">
               <p className="text-sm font-semibold truncate">{user?.name}</p>
               <p className="text-xs text-slate-400 truncate">{user?.email}</p>

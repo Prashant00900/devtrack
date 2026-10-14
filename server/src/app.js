@@ -12,6 +12,8 @@ import aiRoutes from "./routes/aiRoutes.js";
 import promotionRoutes from "./routes/promotionRoutes.js";
 import roadmapProgressRoutes from "./routes/roadmapProgressRoutes.js";
 import certificationRoutes from "./routes/certificationRoutes.js";
+import resourceRoutes from "./routes/resourceRoutes.js";
+import adminRoutes from "./routes/adminRoutes.js";
 
 const app = express();
 
@@ -49,5 +51,7 @@ app.use("/api/ai", aiRoutes);
 app.use("/api/promotion", promotionRoutes);
 app.use("/api/roadmap-progress", roadmapProgressRoutes);
 app.use("/api/certifications", certificationRoutes);
+app.use("/api/resources", resourceRoutes);
+app.use("/api/admin", adminRoutes);
 
 export default app;

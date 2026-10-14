@@ -14,7 +14,10 @@ import Roadmap from "./pages/Roadmap";
 import Github from "./pages/Github";
 import AiAnalysis from "./pages/AiAnalysis";
 import Promotion from "./pages/Promotion";
+import Learn from "./pages/Learn";
+import Admin from "./pages/Admin";
 import ProtectedRoute from "./components/ProtectedRoute";
+import AdminRoute from "./components/AdminRoute";
 import Layout from "./components/Layout";
 
 function App() {
@@ -40,9 +43,18 @@ function App() {
         <Route path="/target-role" element={<TargetRole />} />
         <Route path="/gap-analysis" element={<GapAnalysis />} />
         <Route path="/roadmap" element={<Roadmap />} />
-        <Route path="/github" element={<Github />} />
-        <Route path="/ai-analysis" element={<AiAnalysis />} />
         <Route path="/promotion" element={<Promotion />} />
+        <Route path="/learn" element={<Learn />} />
+        <Route path="/ai-analysis" element={<AiAnalysis />} />
+        <Route path="/github" element={<Github />} />
+        <Route
+          path="/admin"
+          element={
+            <AdminRoute>
+              <Admin />
+            </AdminRoute>
+          }
+        />
       </Route>
 
       <Route path="*" element={<Navigate to="/" replace />} />
