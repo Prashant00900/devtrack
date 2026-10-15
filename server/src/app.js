@@ -16,6 +16,8 @@ import resourceRoutes from "./routes/resourceRoutes.js";
 import adminRoutes from "./routes/adminRoutes.js";
 import resumeRoutes from "./routes/resumeRoutes.js";
 import trackerRoutes from "./routes/trackerRoutes.js";
+import interviewRoutes from "./routes/interviewRoutes.js";
+import englishRoutes from "./routes/englishRoutes.js";
 
 const app = express();
 
@@ -57,5 +59,7 @@ app.use("/api/resources", resourceRoutes);
 app.use("/api/admin", adminRoutes);
 app.use("/api/resume", resumeRoutes);
 app.use("/api/tracker", trackerRoutes);
+app.use("/api/interview", interviewRoutes);
+app.use("/api/english", englishRoutes);
 
 export default app;

@@ -35,7 +35,11 @@ const groups = [
   },
   {
     title: "AI Tools",
-    links: [{ to: "/ai-analysis", label: "AI Analysis", icon: "✨" }],
+    links: [
+      { to: "/mock-interview", label: "Mock Interview", icon: "🎤" },
+      { to: "/english-coach", label: "English Coach", icon: "💬" },
+      { to: "/ai-analysis", label: "AI Analysis", icon: "✨" },
+    ],
   },
   {
     title: "Insights",
