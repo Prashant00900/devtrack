@@ -15,6 +15,7 @@ import Github from "./pages/Github";
 import AiAnalysis from "./pages/AiAnalysis";
 import Promotion from "./pages/Promotion";
 import Learn from "./pages/Learn";
+import ResumeAnalyzer from "./pages/ResumeAnalyzer";
 import Admin from "./pages/Admin";
 import ProtectedRoute from "./components/ProtectedRoute";
 import AdminRoute from "./components/AdminRoute";
@@ -44,6 +45,7 @@ function App() {
         <Route path="/gap-analysis" element={<GapAnalysis />} />
         <Route path="/roadmap" element={<Roadmap />} />
         <Route path="/promotion" element={<Promotion />} />
+        <Route path="/resume" element={<ResumeAnalyzer />} />
         <Route path="/learn" element={<Learn />} />
         <Route path="/ai-analysis" element={<AiAnalysis />} />
         <Route path="/github" element={<Github />} />

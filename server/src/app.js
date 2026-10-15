@@ -14,6 +14,7 @@ import roadmapProgressRoutes from "./routes/roadmapProgressRoutes.js";
 import certificationRoutes from "./routes/certificationRoutes.js";
 import resourceRoutes from "./routes/resourceRoutes.js";
 import adminRoutes from "./routes/adminRoutes.js";
+import resumeRoutes from "./routes/resumeRoutes.js";
 
 const app = express();
 
@@ -33,7 +34,7 @@ app.use(
     },
   })
 );
-app.use(express.json());
+app.use(express.json({ limit: "1mb" }));
 
 app.get("/api/health", (req, res) => {
   res.json({ status: "ok", message: "DevTrack API is running" });
@@ -53,5 +54,6 @@ app.use("/api/roadmap-progress", roadmapProgressRoutes);
 app.use("/api/certifications", certificationRoutes);
 app.use("/api/resources", resourceRoutes);
 app.use("/api/admin", adminRoutes);
+app.use("/api/resume", resumeRoutes);
 
 export default app;

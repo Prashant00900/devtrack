@@ -27,7 +27,10 @@ const groups = [
   },
   {
     title: "Learn & Prepare",
-    links: [{ to: "/learn", label: "Learning Hub", icon: "📚" }],
+    links: [
+      { to: "/resume", label: "Resume Analyzer", icon: "📄" },
+      { to: "/learn", label: "Learning Hub", icon: "📚" },
+    ],
   },
   {
     title: "AI Tools",
