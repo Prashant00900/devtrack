@@ -15,6 +15,7 @@ import certificationRoutes from "./routes/certificationRoutes.js";
 import resourceRoutes from "./routes/resourceRoutes.js";
 import adminRoutes from "./routes/adminRoutes.js";
 import resumeRoutes from "./routes/resumeRoutes.js";
+import trackerRoutes from "./routes/trackerRoutes.js";
 
 const app = express();
 
@@ -55,5 +56,6 @@ app.use("/api/certifications", certificationRoutes);
 app.use("/api/resources", resourceRoutes);
 app.use("/api/admin", adminRoutes);
 app.use("/api/resume", resumeRoutes);
+app.use("/api/tracker", trackerRoutes);
 
 export default app;
