@@ -14,7 +14,7 @@ function SkillMap() {
       const res = await api.get("/project-skills");
       setItems(res.data.items);
     } catch {
-      setError("Data load nahi hua");
+      setError("Could not load data");
     } finally {
       setLoading(false);
     }
@@ -34,12 +34,12 @@ function SkillMap() {
       const res = await api.post("/project-skills/sync");
       setMessage(
         res.data.added.length
-          ? `${res.data.added.length} skills add hui: ${res.data.added.join(", ")}`
-          : "Koi nayi skill add karne ko nahi thi"
+          ? `${res.data.added.length} skills added: ${res.data.added.join(", ")}`
+          : "No new skills to add"
       );
       load();
     } catch (err) {
-      setError(err.response?.data?.message || "Sync nahi hua");
+      setError(err.response?.data?.message || "Could not sync");
     } finally {
       setSyncing(false);
     }
@@ -51,7 +51,7 @@ function SkillMap() {
     <div>
       <h1 className="text-3xl font-bold mb-2">Project → Skill Map</h1>
       <p className="text-slate-400 mb-6">
-        Tumhare projects mein use hui skills aur wo tumhari My Skills list mein hain ya nahi.
+        Skills used in your projects, and whether they are in your My Skills list.
       </p>
 
       {message && (
@@ -64,10 +64,10 @@ function SkillMap() {
       {items.length === 0 ? (
         <div className="bg-slate-800 p-4 rounded-xl">
           <p className="text-slate-300 mb-2">
-            Abhi kisi project mein tech stack select nahi hai.
+            No project has a tech stack selected yet.
           </p>
           <Link to="/projects" className="text-blue-400 underline">
-            Projects mein tech stack add karo →
+            Add a tech stack in Projects →
           </Link>
         </div>
       ) : (
@@ -75,8 +75,8 @@ function SkillMap() {
           <div className="bg-slate-800 p-4 rounded-xl flex items-center justify-between gap-3 mb-6">
             <p className="text-slate-300">
               {missing.length === 0
-                ? "Saari project skills tumhari My Skills mein hain ✅"
-                : `${missing.length} skills projects mein hain par My Skills mein nahi`}
+                ? "All project skills are in your My Skills ✅"
+                : `${missing.length} skills are used in projects but missing from My Skills`}
             </p>
             <button
               onClick={handleSync}
@@ -105,7 +105,7 @@ function SkillMap() {
                     >
                       {item.inMySkills
                         ? "In My Skills"
-                        : `Not in My Skills (level ${item.suggestedLevel} add hoga)`}
+                        : `Not in My Skills (level ${item.suggestedLevel} will be added)`}
                     </span>
                   </div>
                 </div>

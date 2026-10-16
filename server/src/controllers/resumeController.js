@@ -7,13 +7,13 @@ export const analyzeResume = async (req, res) => {
 
     if (req.file) {
       if (req.file.mimetype !== "application/pdf") {
-        return res.status(400).json({ message: "Sirf PDF file upload karo" });
+        return res.status(400).json({ message: "Please upload a PDF file only" });
       }
       try {
         text = await extractPdfText(req.file.buffer);
       } catch {
         return res.status(400).json({
-          message: "PDF padhi nahi ja saki. Resume ka text copy karke 'Paste text' mein daalo.",
+          message: "Could not read the PDF. Copy your resume text and use 'Paste text' instead.",
         });
       }
     } else if (req.body?.text) {
@@ -24,7 +24,7 @@ export const analyzeResume = async (req, res) => {
 
     if (text.length < 80) {
       return res.status(400).json({
-        message: "Resume se text nahi nikla. PDF scanned image ho to text paste karo.",
+        message: "Could not extract text from the resume. If the PDF is a scanned image, paste the text instead.",
       });
     }
 

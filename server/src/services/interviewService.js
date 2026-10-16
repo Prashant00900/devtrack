@@ -87,7 +87,7 @@ export const getNextQuestion = async (userId, type, total, history) => {
 
   const question = clean(data.question, 400);
   if (!question) {
-    const err = new Error("AI ne sawal nahi diya. Dobara try karo.");
+    const err = new Error("The AI did not return a question. Please try again.");
     err.status = 502;
     throw err;
   }

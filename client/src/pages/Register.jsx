@@ -37,7 +37,7 @@ function Register() {
       await googleLogin(credential);
       navigate("/dashboard");
     } catch (err) {
-      setError(err.response?.data?.message || "Google login fail ho gaya");
+      setError(err.response?.data?.message || "Google login failed");
     }
   };
 

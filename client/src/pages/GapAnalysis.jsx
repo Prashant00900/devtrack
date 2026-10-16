@@ -62,7 +62,7 @@ function GapAnalysis() {
       .get("/analysis/gap")
       .then((res) => setReport(res.data.report))
       .catch((err) =>
-        setError(err.response?.data?.message || "Analysis load nahi hui")
+        setError(err.response?.data?.message || "Could not load the analysis")
       )
       .finally(() => setLoading(false));
   }, []);

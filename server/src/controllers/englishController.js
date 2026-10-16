@@ -41,7 +41,7 @@ export const chat = async (req, res) => {
       .filter((m) => m.text);
 
     if (messages.length === 0 || messages[messages.length - 1].role !== "user") {
-      return res.status(400).json({ message: "Pehle kuch likho" });
+      return res.status(400).json({ message: "Please type something first" });
     }
 
     if (messages[0].role === "model") {

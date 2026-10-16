@@ -16,7 +16,7 @@ const uploadResume = (req, res, next) => {
       return res.status(400).json({
         message:
           err.code === "LIMIT_FILE_SIZE"
-            ? "PDF 2MB se chhoti honi chahiye"
+            ? "The PDF must be smaller than 2MB"
             : err.message,
       });
     }

@@ -133,30 +133,30 @@ export const analyzeResumeText = async (rawText, userId) => {
   const tips = [];
 
   if (!role) {
-    tips.push("Target Role select karo, taaki skills role ke hisaab se compare ho sakein.");
+    tips.push("Select a Target Role so your skills can be compared with the role.");
   }
 
   const mustMissing = missingRequired.filter((m) => m.importance === "must");
   if (mustMissing.length) {
     tips.push(
-      `Role ki must-have skills resume mein nahi dikhi: ${mustMissing
+      `Must-have skills for this role are missing from your resume: ${mustMissing
         .slice(0, 5)
         .map((m) => m.name)
-        .join(", ")}. Jo skills tum sach mein jaante ho wahi likho, baaki neeche ke links se seekho.`
+        .join(", ")}. List only skills you really know, and learn the rest from the links below.`
     );
   }
 
-  if (!sections.projects) tips.push("Ek 'Projects' section add karo. Har project mein tech stack aur kya banaya wo likho.");
-  if (!sections.skills) tips.push("Ek alag 'Skills' section add karo, taaki ATS keywords aasani se pakad sake.");
-  if (!sections.education) tips.push("Education section add karo (college, degree, year).");
-  if (!sections.achievements) tips.push("Certifications ya achievements ka section add karo.");
-  if (!contact.email) tips.push("Resume mein apna email likho.");
-  if (!contact.phone) tips.push("Resume mein phone number likho.");
-  if (!contact.links) tips.push("GitHub aur LinkedIn ke links add karo.");
-  if (actionVerbs < 6) tips.push("Bullet points ki shuruaat action words se karo (Built, Developed, Designed, Implemented...).");
-  if (metrics < 3) tips.push("Numbers jodo, jaise 'reduced load time by 40%' ya 'built 12 API endpoints'.");
-  if (words < 300) tips.push(`Resume bahut chhota hai (${words} words). Projects aur skills ka detail badhao.`);
-  if (words > 900) tips.push(`Resume bahut lamba hai (${words} words). Fresher ke liye 1 page kaafi hai.`);
+  if (!sections.projects) tips.push("Add a 'Projects' section. For each project, write the tech stack and what you built.");
+  if (!sections.skills) tips.push("Add a separate 'Skills' section so ATS can pick up your keywords easily.");
+  if (!sections.education) tips.push("Add an Education section (college, degree, year).");
+  if (!sections.achievements) tips.push("Add a Certifications or Achievements section.");
+  if (!contact.email) tips.push("Add your email address to the resume.");
+  if (!contact.phone) tips.push("Add your phone number to the resume.");
+  if (!contact.links) tips.push("Add your GitHub and LinkedIn links.");
+  if (actionVerbs < 6) tips.push("Start bullet points with action words (Built, Developed, Designed, Implemented...).");
+  if (metrics < 3) tips.push("Add numbers, like 'reduced load time by 40%' or 'built 12 API endpoints'.");
+  if (words < 300) tips.push(`Your resume is too short (${words} words). Add more detail about your projects and skills.`);
+  if (words > 900) tips.push(`Your resume is too long (${words} words). One page is enough for a fresher.`);
 
   // Missing skills ke saath learning links
   const missingIds = missingRequired.map((m) => m.skillId);

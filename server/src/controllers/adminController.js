@@ -109,7 +109,7 @@ export const updateUserRole = async (req, res) => {
     }
 
     if (req.params.id === req.user._id.toString()) {
-      return res.status(400).json({ message: "Apna khud ka role nahi badal sakte" });
+      return res.status(400).json({ message: "You cannot change your own role" });
     }
 
     const user = await User.findByIdAndUpdate(
@@ -132,7 +132,7 @@ export const updateUserRole = async (req, res) => {
 export const deleteUser = async (req, res) => {
   try {
     if (req.params.id === req.user._id.toString()) {
-      return res.status(400).json({ message: "Apna khud ka account delete nahi kar sakte" });
+      return res.status(400).json({ message: "You cannot delete your own account" });
     }
 
     const user = await User.findById(req.params.id);
@@ -180,7 +180,7 @@ export const createResource = async (req, res) => {
     }
 
     if (!/^https?:\/\//i.test(url)) {
-      return res.status(400).json({ message: "URL http:// ya https:// se shuru hona chahiye" });
+      return res.status(400).json({ message: "URL must start with http:// or https://" });
     }
 
     const skill = await Skill.findById(skillId);
@@ -198,7 +198,7 @@ export const createResource = async (req, res) => {
     res.status(201).json({ resource });
   } catch (error) {
     if (error.code === 11000) {
-      return res.status(400).json({ message: "Ye link is skill ke liye pehle se hai" });
+      return res.status(400).json({ message: "This link already exists for this skill" });
     }
     res.status(400).json({ message: error.message });
   }

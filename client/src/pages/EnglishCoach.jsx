@@ -172,7 +172,7 @@ function EnglishCoach() {
     } catch (err) {
       setMessages(previous);
       setInput(text);
-      setError(err.response?.data?.message || "Message nahi gaya, dobara try karo");
+      setError(err.response?.data?.message || "Message was not sent, please try again");
     } finally {
       setSending(false);
     }

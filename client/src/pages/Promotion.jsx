@@ -13,7 +13,7 @@ const levelNames = {
 const verdicts = {
   ready: { text: "Ready for promotion 🎉", color: "text-green-400", bar: "bg-green-500" },
   almost: { text: "Almost there 💪", color: "text-yellow-400", bar: "bg-yellow-500" },
-  "not-yet": { text: "Abhi thoda time lagega", color: "text-red-400", bar: "bg-red-500" },
+  "not-yet": { text: "Not ready yet", color: "text-red-400", bar: "bg-red-500" },
 };
 
 function Promotion() {
@@ -26,7 +26,7 @@ function Promotion() {
       .get("/promotion/readiness")
       .then((res) => setData(res.data))
       .catch((err) =>
-        setError(err.response?.data?.message || "Data load nahi hua")
+        setError(err.response?.data?.message || "Could not load data")
       )
       .finally(() => setLoading(false));
   }, []);
@@ -47,7 +47,7 @@ function Promotion() {
       <div>
         <h1 className="text-3xl font-bold mb-4">Promotion Readiness</h1>
         <p className="bg-slate-800 p-4 rounded-xl text-slate-300">
-          Tum already Senior level par ho. Ab leadership, mentoring aur system design par focus karo.
+          You are already at Senior level. Focus on leadership, mentoring and system design now.
         </p>
       </div>
     );
@@ -61,7 +61,7 @@ function Promotion() {
       <p className="text-slate-400 mb-6">
         {levelNames[data.currentLevel]} → {levelNames[data.nextLevel]} ·{" "}
         <Link to="/profile" className="text-blue-400 underline">
-          Level badalna hai? Profile kholo
+          Want to change your level? Open Profile
         </Link>
       </p>
 
@@ -100,7 +100,7 @@ function Promotion() {
 
       {data.actions.length > 0 && (
         <div className="bg-slate-800 p-4 rounded-xl">
-          <h2 className="text-lg font-semibold mb-3">Kya karna hai 🚀</h2>
+          <h2 className="text-lg font-semibold mb-3">What to do next 🚀</h2>
           <ol className="list-decimal pl-5 space-y-2 text-slate-200">
             {data.actions.map((a, i) => (
               <li key={i}>{a}</li>

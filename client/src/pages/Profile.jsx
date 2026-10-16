@@ -32,7 +32,7 @@ function Profile() {
           linkedinUrl: p.linkedinUrl || "",
         });
       })
-      .catch(() => setError("Profile load nahi hui"))
+      .catch(() => setError("Could not load profile"))
       .finally(() => setLoading(false));
   }, []);
 
@@ -48,7 +48,7 @@ function Profile() {
       await api.put("/profile", form);
       setMessage("Profile saved ✅");
     } catch (err) {
-      setError(err.response?.data?.message || "Save nahi hua");
+      setError(err.response?.data?.message || "Could not save");
     }
   };
 

@@ -6,7 +6,7 @@ export const emailConfigured = () =>
 // Brevo ki HTTPS API se email bhejo (Render free par SMTP block hota hai)
 export const sendEmail = async ({ to, subject, html, text }) => {
   if (!emailConfigured()) {
-    throw new Error("Email service set nahi hai");
+    throw new Error("Email service is not configured");
   }
 
   const res = await fetch(BREVO_URL, {

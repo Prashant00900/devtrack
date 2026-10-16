@@ -15,25 +15,25 @@ const ghFetch = async (path) => {
   const res = await fetch(`${GITHUB_API}${path}`, { headers });
 
   if (res.status === 404) {
-    const err = new Error("GitHub user nahi mila. Username check karo.");
+    const err = new Error("GitHub user not found. Check the username.");
     err.status = 404;
     throw err;
   }
 
   if (res.status === 401) {
-    const err = new Error("GITHUB_TOKEN galat ya expire ho gaya hai.");
+    const err = new Error("GITHUB_TOKEN is invalid or expired.");
     err.status = 502;
     throw err;
   }
 
   if (res.status === 403 || res.status === 429) {
-    const err = new Error("GitHub rate limit ho gayi. Thodi der baad try karo.");
+    const err = new Error("GitHub rate limit reached. Please try again later.");
     err.status = 429;
     throw err;
   }
 
   if (!res.ok) {
-    const err = new Error("GitHub se data nahi aaya");
+    const err = new Error("Could not fetch data from GitHub");
     err.status = 502;
     throw err;
   }

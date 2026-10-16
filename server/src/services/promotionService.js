@@ -58,32 +58,32 @@ const describe = (criterion, current) => {
     case "skillCount":
       return {
         label: "Total skills",
-        action: `${gap} aur skills add karo`,
+        action: `Add ${gap} more skills`,
       };
     case "strongSkills":
       return {
         label: "Skills at level 4+",
-        action: `${gap} aur skills ko level 4 tak le jao`,
+        action: `Raise ${gap} more skills to level 4`,
       };
     case "projectsCompleted":
       return {
         label: "Completed projects",
-        action: `${gap} aur project complete karo`,
+        action: `Complete ${gap} more projects`,
       };
     case "liveProjects":
       return {
         label: "Projects with live link",
-        action: `${gap} project ko deploy karke live link add karo`,
+        action: `Deploy ${gap} project(s) and add a live link`,
       };
     case "categories":
       return {
         label: "Skill categories covered",
-        action: `${gap} nayi category ki skill seekho (jaise devops, testing, database)`,
+        action: `Learn skills from ${gap} new categories (for example devops, testing, database)`,
       };
     case "skill":
       return {
         label: `${criterion.name} level`,
-        action: `${criterion.name} ko level ${criterion.target} tak le jao`,
+        action: `Raise ${criterion.name} to level ${criterion.target}`,
       };
     default:
       return { label: "", action: "" };

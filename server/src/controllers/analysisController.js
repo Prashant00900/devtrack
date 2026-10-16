@@ -6,7 +6,7 @@ export const getGapAnalysis = async (req, res) => {
   try {
     const report = await buildGapReport(req.user._id);
     if (!report) {
-      return res.status(400).json({ message: "Pehle Target Role select karo" });
+      return res.status(400).json({ message: "Please select a Target Role first" });
     }
     res.json({ report });
   } catch (error) {
@@ -23,7 +23,7 @@ export const getRoadmap = async (req, res) => {
     ]);
 
     if (!report) {
-      return res.status(400).json({ message: "Pehle Target Role select karo" });
+      return res.status(400).json({ message: "Please select a Target Role first" });
     }
 
     const doneIds = new Set(progress.map((p) => p.skill.toString()));

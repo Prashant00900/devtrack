@@ -15,13 +15,13 @@ const router = express.Router();
 const forgotLimiter = createLimiter({
   windowMs: 15 * 60 * 1000,
   max: 5,
-  message: "Bahut zyada requests. 15 minute baad try karo.",
+  message: "Too many requests. Please try again in 15 minutes.",
 });
 
 const resetLimiter = createLimiter({
   windowMs: 15 * 60 * 1000,
   max: 10,
-  message: "Bahut zyada koshishein. 15 minute baad try karo.",
+  message: "Too many attempts. Please try again in 15 minutes.",
 });
 
 router.post("/register", registerUser);

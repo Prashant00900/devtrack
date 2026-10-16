@@ -13,7 +13,7 @@ function Certifications() {
       const res = await api.get("/certifications");
       setCerts(res.data.certifications);
     } catch {
-      setError("Certifications load nahi hui");
+      setError("Could not load certifications");
     }
   };
 
@@ -33,7 +33,7 @@ function Certifications() {
       setForm(emptyForm);
       load();
     } catch (err) {
-      setError(err.response?.data?.message || "Save nahi hua");
+      setError(err.response?.data?.message || "Could not save");
     }
   };
 
@@ -42,7 +42,7 @@ function Certifications() {
       await api.delete(`/certifications/${id}`);
       load();
     } catch (err) {
-      setError(err.response?.data?.message || "Delete nahi hua");
+      setError(err.response?.data?.message || "Could not delete");
     }
   };
 
@@ -95,7 +95,7 @@ function Certifications() {
       </form>
 
       {certs.length === 0 ? (
-        <p className="text-slate-400">Abhi koi certification add nahi hui.</p>
+        <p className="text-slate-400">No certifications added yet.</p>
       ) : (
         <div className="space-y-3">
           {certs.map((c) => (

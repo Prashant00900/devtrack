@@ -18,7 +18,7 @@ function ForgotPassword() {
       const res = await api.post("/auth/forgot-password", { email });
       setMessage(res.data.message);
     } catch (err) {
-      setError(err.response?.data?.message || "Kuch galat hua, dobara try karo");
+      setError(err.response?.data?.message || "Something went wrong, please try again");
     } finally {
       setSubmitting(false);
     }

@@ -48,7 +48,7 @@ function LinkedInCard({ url }) {
             <p className="text-sm text-slate-400 truncate">{url}</p>
           ) : (
             <p className="text-sm text-slate-400">
-              Profile mein apna LinkedIn link add karo.
+              Add your LinkedIn link in Profile.
             </p>
           )}
         </div>
@@ -99,7 +99,7 @@ function Github() {
       setData(res.data.summary);
     } catch (err) {
       if (err.response?.status === 400) setNeedsUsername(true);
-      setError(err.response?.data?.message || "GitHub data load nahi hua");
+      setError(err.response?.data?.message || "Could not load GitHub data");
     } finally {
       setLoading(false);
     }
@@ -109,7 +109,7 @@ function Github() {
     load();
   }, []);
 
-  if (loading) return <p className="text-slate-400">GitHub data la rahe hain...</p>;
+  if (loading) return <p className="text-slate-400">Loading GitHub data...</p>;
 
   return (
     <div>
@@ -130,11 +130,11 @@ function Github() {
           <div className="flex gap-4 mt-3 text-sm">
             {needsUsername ? (
               <Link to="/profile" className="text-blue-400 hover:underline">
-                Profile mein GitHub username daalo →
+                Add your GitHub username in Profile →
               </Link>
             ) : (
               <button onClick={load} className="text-blue-400 hover:underline">
-                Dobara try karo
+                Try again
               </button>
             )}
           </div>
@@ -182,7 +182,7 @@ function Github() {
             <div className={cardClass}>
               <h2 className="text-lg font-semibold mb-4">Languages (repos count)</h2>
               {data.languages.length === 0 ? (
-                <p className="text-slate-400 text-sm">Koi language data nahi mila.</p>
+                <p className="text-slate-400 text-sm">No language data found.</p>
               ) : (
                 <div className="h-72">
                   <ResponsiveContainer width="100%" height="100%">
@@ -228,7 +228,7 @@ function Github() {
           <div className={cardClass}>
             <h2 className="text-lg font-semibold mb-4">Top repositories</h2>
             {data.topRepos.length === 0 ? (
-              <p className="text-slate-400 text-sm">Koi repo nahi mili.</p>
+              <p className="text-slate-400 text-sm">No repositories found.</p>
             ) : (
               <div className="grid md:grid-cols-2 gap-3">
                 {data.topRepos.map((r) => (

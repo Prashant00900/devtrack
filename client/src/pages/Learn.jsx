@@ -94,7 +94,7 @@ function Learn() {
         setResources(r.data.resources);
         setReport(g ? g.data.report : null);
       } catch {
-        setError("Learning Hub load nahi hua");
+        setError("Could not load the Learning Hub");
       } finally {
         setLoading(false);
       }
@@ -152,7 +152,7 @@ function Learn() {
 
       {resources.length === 0 && !error && (
         <p className="bg-yellow-500/10 border border-yellow-500/30 text-yellow-200 p-3 rounded-lg mb-6 text-sm">
-          Abhi curated links add nahi hue. Admin Panel → Resources → "Load default links" dabao. Tab tak YouTube aur Google links kaam karenge.
+          No curated links yet. Admin Panel → Resources → "Load default links" to add them. Until then the YouTube and Google links still work.
         </p>
       )}
 
@@ -177,9 +177,9 @@ function Learn() {
 
       {!report && (
         <p className="text-sm text-slate-400 mb-6">
-          Personal recommendations ke liye{" "}
+          For personal recommendations,{" "}
           <Link to="/target-role" className="text-blue-400 hover:underline">
-            target role select karo
+            select a target role
           </Link>
           .
         </p>
@@ -213,7 +213,7 @@ function Learn() {
       </div>
 
       {filtered.length === 0 ? (
-        <p className="text-slate-400">Koi skill nahi mili.</p>
+        <p className="text-slate-400">No skills found.</p>
       ) : (
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
           {filtered.map((s) => (

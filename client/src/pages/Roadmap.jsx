@@ -12,7 +12,7 @@ function Roadmap() {
       .get("/analysis/roadmap")
       .then((res) => setData(res.data))
       .catch((err) =>
-        setError(err.response?.data?.message || "Roadmap load nahi hua")
+        setError(err.response?.data?.message || "Could not load the roadmap")
       )
       .finally(() => setLoading(false));
   }, []);
@@ -29,7 +29,7 @@ function Roadmap() {
         ),
       }));
     } catch {
-      setError("Update nahi hua");
+      setError("Could not update");
     }
   };
 

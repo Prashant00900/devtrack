@@ -32,7 +32,7 @@ function Projects() {
       setProjects(p.data.projects);
       setAllSkills(s.data.skills);
     } catch {
-      setError("Data load nahi hua");
+      setError("Could not load data");
     }
   };
 
@@ -81,7 +81,7 @@ function Projects() {
       resetForm();
       load();
     } catch (err) {
-      setError(err.response?.data?.message || "Project save nahi hua");
+      setError(err.response?.data?.message || "Could not save the project");
     }
   };
 
@@ -91,7 +91,7 @@ function Projects() {
       if (editingId === id) resetForm();
       load();
     } catch (err) {
-      setError(err.response?.data?.message || "Delete nahi hua");
+      setError(err.response?.data?.message || "Could not delete");
     }
   };
 

@@ -16,7 +16,7 @@ function ResetPassword() {
     setError("");
 
     if (password !== confirm) {
-      setError("Dono passwords same nahi hain");
+      setError("The two passwords do not match");
       return;
     }
 
@@ -25,7 +25,7 @@ function ResetPassword() {
       await api.post("/auth/reset-password", { token, password });
       setDone(true);
     } catch (err) {
-      setError(err.response?.data?.message || "Kuch galat hua, dobara try karo");
+      setError(err.response?.data?.message || "Something went wrong, please try again");
     } finally {
       setSubmitting(false);
     }
@@ -54,7 +54,7 @@ function ResetPassword() {
           <p>{error}</p>
           {error.includes("expire") && (
             <Link to="/forgot-password" className="text-blue-400 hover:underline">
-              Naya link mangao →
+              Request a new link →
             </Link>
           )}
         </div>

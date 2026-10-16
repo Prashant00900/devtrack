@@ -10,7 +10,7 @@ export const aiLimit = (req, res, next) => {
 
   if (recent.length >= MAX_CALLS) {
     return res.status(429).json({
-      message: "Ek ghante mein AI ke 40 requests ho gaye. Thodi der baad try karo.",
+      message: "You have reached the limit of 40 AI requests per hour. Please try again later.",
     });
   }
 

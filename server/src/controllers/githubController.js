@@ -10,7 +10,7 @@ export const getMyGithubSummary = async (req, res) => {
     if (!username) {
       return res
         .status(400)
-        .json({ message: "Pehle Profile page par GitHub username daalo" });
+        .json({ message: "Please add your GitHub username in Profile first" });
     }
 
     const summary = await getGithubSummary(username);

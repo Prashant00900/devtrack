@@ -66,7 +66,7 @@ const ruleBasedAnalysis = (report) => {
     summary: `You are ${pct}% matched with ${roleTitle}, which means you are ${level}. You have ${report.strong.length} skills at the required level, ${report.weak.length} that need improvement and ${report.missing.length} still missing. Focus on the must-have skills first.`,
     strengths: report.strong.length
       ? report.strong.slice(0, 5).map((s) => `${s.name} is at the required level (${s.userLevel}/${s.minLevel})`)
-      : ["Abhi koi skill required level tak nahi pahunchi. Shuruaat karne ke liye ek skill chuno."],
+      : ["No skill has reached the required level yet. Pick one skill to start with."],
     improvements: [
       ...report.weak
         .slice(0, 3)
@@ -93,7 +93,7 @@ const toList = (value) =>
 const parseAiJson = (text) => {
   const start = text.indexOf("{");
   const end = text.lastIndexOf("}");
-  if (start === -1 || end === -1) throw new Error("AI ka response samajh nahi aaya");
+  if (start === -1 || end === -1) throw new Error("Could not understand the AI response");
 
   const parsed = JSON.parse(text.slice(start, end + 1));
 
@@ -129,10 +129,10 @@ const callClaude = async (data) => {
 
     const err = new Error(
       res.status === 401
-        ? "AI API key galat hai. .env check karo."
+        ? "The AI API key is invalid. Check .env."
         : res.status === 429 || res.status === 529
-        ? "AI abhi busy hai. Thodi der baad try karo."
-        : `AI API error (${res.status}). Backend terminal mein details dekho.`
+        ? "The AI is busy right now. Please try again later."
+        : `AI API error (${res.status}). Check the backend terminal for details.`
     );
     err.status = 502;
     throw err;
@@ -151,7 +151,7 @@ export const generateAnalysis = async (userId) => {
   const { report, data } = await collectData(userId);
 
   if (!report) {
-    const err = new Error("Pehle Target Role select karo");
+    const err = new Error("Please select a Target Role first");
     err.status = 400;
     throw err;
   }

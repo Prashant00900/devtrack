@@ -142,7 +142,7 @@ function MockInterview() {
       setQuestion(res.data.question);
       setStage("interview");
     } catch (err) {
-      setError(err.response?.data?.message || "Interview start nahi hua");
+      setError(err.response?.data?.message || "Could not start the interview");
     } finally {
       setLoading(false);
     }
@@ -150,7 +150,7 @@ function MockInterview() {
 
   const submitAnswer = async () => {
     if (!answer.trim()) {
-      setError("Pehle jawab likho ya bolo. Pata na ho to 'I don't know' likh do.");
+      setError("Please type or speak your answer first. If you do not know, type 'I do not know'.");
       return;
     }
 
@@ -182,14 +182,14 @@ function MockInterview() {
         setAnswer("");
       }
     } catch (err) {
-      setError(err.response?.data?.message || "Kuch galat hua, dobara try karo");
+      setError(err.response?.data?.message || "Something went wrong, please try again");
     } finally {
       setLoading(false);
     }
   };
 
   const quit = () => {
-    if (!window.confirm("Interview beech mein chhod doge? Report nahi banegi.")) return;
+    if (!window.confirm("Leave the interview now? No report will be created.")) return;
     stopListening();
     window.speechSynthesis?.cancel();
     setStage("setup");

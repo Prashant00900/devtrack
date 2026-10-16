@@ -6,7 +6,7 @@ import { sendEmail, emailConfigured } from "../services/emailService.js";
 
 const RESET_MINUTES = 15;
 const FORGOT_MESSAGE =
-  "Agar ye email registered hai, to password reset ka link bhej diya gaya hai. Spam folder bhi check karo.";
+  "If this email is registered, a password reset link has been sent. Please check your spam folder too.";
 
 const hashToken = (token) =>
   crypto.createHash("sha256").update(token).digest("hex");
@@ -63,7 +63,7 @@ export const loginUser = async (req, res) => {
     if (!user.password) {
       return res.status(400).json({
         message:
-          "Ye account Google se bana hai. 'Continue with Google' se login karo, ya 'Forgot password' se password set karo.",
+          "This account was created with Google. Use 'Continue with Google', or use 'Forgot password' to set a password.",
       });
     }
 
@@ -90,7 +90,7 @@ export const googleLogin = async (req, res) => {
     }
 
     if (!process.env.GOOGLE_CLIENT_ID) {
-      return res.status(500).json({ message: "Google login server par set nahi hai" });
+      return res.status(500).json({ message: "Google login is not configured on the server" });
     }
 
     // Google ka token backend par verify hota hai, frontend par bharosa nahi karte
@@ -102,7 +102,7 @@ export const googleLogin = async (req, res) => {
     const payload = ticket.getPayload();
 
     if (!payload?.email || !payload.email_verified) {
-      return res.status(401).json({ message: "Google email verified nahi hai" });
+      return res.status(401).json({ message: "Google email is not verified" });
     }
 
     const email = payload.email.toLowerCase();
@@ -129,7 +129,7 @@ export const googleLogin = async (req, res) => {
     });
   } catch (error) {
     console.error("Google login error:", error.message);
-    res.status(401).json({ message: "Google login fail ho gaya. Dobara try karo." });
+    res.status(401).json({ message: "Google login failed. Please try again." });
   }
 };
 
@@ -139,7 +139,7 @@ export const forgotPassword = async (req, res) => {
     const email = String(req.body.email || "").trim().toLowerCase();
 
     if (!email) {
-      return res.status(400).json({ message: "Email likho" });
+      return res.status(400).json({ message: "Please enter your email" });
     }
 
     const user = await User.findOne({ email });
@@ -160,7 +160,7 @@ export const forgotPassword = async (req, res) => {
 
       if (!emailConfigured() && process.env.NODE_ENV !== "production") {
         // Local testing: email set nahi hai to link terminal mein dikhao
-        console.log("Password reset link (email set nahi hai):", link);
+        console.log("Password reset link (email is not configured):", link);
       } else {
         // await nahi kiya, taaki response ka time same rahe (email exist karta hai ya nahi, pata na chale)
         sendEmail({
@@ -197,7 +197,7 @@ export const resetPassword = async (req, res) => {
     }
 
     if (String(password).length < 6) {
-      return res.status(400).json({ message: "Password kam se kam 6 characters ka rakho" });
+      return res.status(400).json({ message: "Password must be at least 6 characters" });
     }
 
     const user = await User.findOne({
@@ -208,7 +208,7 @@ export const resetPassword = async (req, res) => {
     if (!user) {
       return res
         .status(400)
-        .json({ message: "Reset link galat ya expire ho gaya. Naya link mangao." });
+        .json({ message: "This reset link is invalid or has expired. Please request a new one." });
     }
 
     user.password = password;
@@ -216,7 +216,7 @@ export const resetPassword = async (req, res) => {
     user.resetPasswordExpires = undefined;
     await user.save();
 
-    res.json({ message: "Password badal gaya. Ab login karo." });
+    res.json({ message: "Your password has been changed. You can now log in." });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }

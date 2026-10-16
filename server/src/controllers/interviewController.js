@@ -20,7 +20,7 @@ export const nextQuestion = async (req, res) => {
     const history = cleanHistory(req.body.history);
 
     if (history.length >= total) {
-      return res.status(400).json({ message: "Interview ke saare sawaal ho chuke hain" });
+      return res.status(400).json({ message: "All interview questions are already done" });
     }
 
     const result = await getNextQuestion(req.user._id, type, total, history);
@@ -41,7 +41,7 @@ export const createReport = async (req, res) => {
 
     const history = cleanHistory(req.body.history);
     if (history.length === 0) {
-      return res.status(400).json({ message: "Koi jawab nahi mila" });
+      return res.status(400).json({ message: "No answer found" });
     }
 
     const report = await buildReport(req.user._id, type, history);

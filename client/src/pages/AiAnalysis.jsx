@@ -35,7 +35,7 @@ function AiAnalysis() {
       const res = await api.post("/ai/analysis");
       setResult(res.data);
     } catch (err) {
-      setError(err.response?.data?.message || "Analysis nahi bani");
+      setError(err.response?.data?.message || "Could not generate the analysis");
     } finally {
       setLoading(false);
     }
@@ -47,7 +47,7 @@ function AiAnalysis() {
     <div>
       <h1 className="text-3xl font-bold mb-2">AI Career Analysis</h1>
       <p className="text-slate-400 mb-6">
-        Tumhari skills, projects aur target role ke basis par personalised career advice.
+        Personalised career advice based on your skills, projects and target role.
       </p>
 
       <button
@@ -55,7 +55,7 @@ function AiAnalysis() {
         disabled={loading}
         className="bg-blue-600 hover:bg-blue-500 px-5 py-2 rounded font-semibold disabled:opacity-50 mb-6"
       >
-        {loading ? "Analysis ho rahi hai..." : result ? "Dobara generate karo" : "Analysis generate karo"}
+        {loading ? "Analyzing..." : result ? "Generate again" : "Generate analysis"}
       </button>
 
       {error && (
@@ -63,7 +63,7 @@ function AiAnalysis() {
           <p>{error}</p>
           {error.includes("Target Role") && (
             <Link to="/target-role" className="text-blue-400 underline">
-              Target Role select karo →
+              Select a Target Role →
             </Link>
           )}
         </div>
@@ -74,7 +74,7 @@ function AiAnalysis() {
           <p className="text-xs text-slate-400 mb-3">
             {result.source === "ai"
               ? "🤖 AI generated"
-              : "📋 Rule-based analysis (AI key add karne par AI wali analysis milegi)"}
+              : "📋 Rule-based analysis (add an AI key to get AI-written advice)"}
           </p>
 
           <div className="bg-slate-800 p-4 rounded-xl mb-4">

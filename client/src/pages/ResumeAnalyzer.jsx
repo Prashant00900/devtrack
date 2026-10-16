@@ -26,11 +26,11 @@ function ResumeAnalyzer() {
     setResult(null);
 
     if (mode === "pdf" && !file) {
-      setError("Pehle PDF file choose karo");
+      setError("Please choose a PDF file first");
       return;
     }
     if (mode === "text" && text.trim().length < 80) {
-      setError("Resume ka text paste karo (kam se kam 80 characters)");
+      setError("Paste your resume text (at least 80 characters)");
       return;
     }
 
@@ -46,7 +46,7 @@ function ResumeAnalyzer() {
       }
       setResult(res.data);
     } catch (err) {
-      setError(err.response?.data?.message || "Analysis nahi hui");
+      setError(err.response?.data?.message || "Could not analyze the resume");
     } finally {
       setLoading(false);
     }
@@ -159,9 +159,9 @@ function ResumeAnalyzer() {
 
           {!result.role && (
             <p className="bg-yellow-500/10 border border-yellow-500/30 text-yellow-200 p-3 rounded-lg text-sm">
-              Role-wise missing skills dekhne ke liye pehle{" "}
+              To see role-wise missing skills, first{" "}
               <Link to="/target-role" className="underline">
-                target role select karo
+                select a target role
               </Link>
               .
             </p>
@@ -174,7 +174,7 @@ function ResumeAnalyzer() {
                   ✅ Found in resume ({result.foundRequired.length})
                 </h2>
                 {result.foundRequired.length === 0 ? (
-                  <p className="text-sm text-slate-400">Koi required skill nahi mili.</p>
+                  <p className="text-sm text-slate-400">No required skill found.</p>
                 ) : (
                   <div className="flex flex-wrap gap-2">
                     {result.foundRequired.map((s) => (
@@ -194,7 +194,7 @@ function ResumeAnalyzer() {
                   ❌ Missing for {result.role.title} ({result.missingRequired.length})
                 </h2>
                 {result.missingRequired.length === 0 ? (
-                  <p className="text-sm text-slate-400">Saari required skills resume mein hain 🎉</p>
+                  <p className="text-sm text-slate-400">All required skills are in your resume 🎉</p>
                 ) : (
                   <div className="space-y-3">
                     {result.missingRequired.map((m) => (
@@ -246,7 +246,7 @@ function ResumeAnalyzer() {
           <div className={cardClass}>
             <h2 className="font-semibold mb-3">💡 How to improve</h2>
             {result.tips.length === 0 ? (
-              <p className="text-sm text-slate-400">Resume achha dikh raha hai. Koi bada sudhaar nahi mila.</p>
+              <p className="text-sm text-slate-400">Your resume looks good. No major improvements found.</p>
             ) : (
               <ul className="list-disc pl-5 space-y-2 text-sm text-slate-200">
                 {result.tips.map((t, i) => (
@@ -260,7 +260,7 @@ function ResumeAnalyzer() {
             <div className={cardClass}>
               <h2 className="font-semibold mb-3">All skills we detected</h2>
               {result.detectedSkills.length === 0 ? (
-                <p className="text-sm text-slate-400">Koi known skill nahi mili.</p>
+                <p className="text-sm text-slate-400">No known skills detected.</p>
               ) : (
                 <div className="flex flex-wrap gap-2">
                   {result.detectedSkills.map((s) => (

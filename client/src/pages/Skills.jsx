@@ -31,7 +31,7 @@ function Skills() {
       setAllSkills(all.data.skills);
       setMySkills(mine.data.userSkills);
     } catch {
-      setError("Skills load nahi hui");
+      setError("Could not load skills");
     }
   };
 
@@ -52,7 +52,7 @@ function Skills() {
       setLevel(1);
       load();
     } catch (err) {
-      setError(err.response?.data?.message || "Add nahi hua");
+      setError(err.response?.data?.message || "Could not add");
     }
   };
 
@@ -61,7 +61,7 @@ function Skills() {
       await api.put(`/skills/me/${id}`, { level: newLevel });
       load();
     } catch (err) {
-      setError(err.response?.data?.message || "Update nahi hua");
+      setError(err.response?.data?.message || "Could not update");
     }
   };
 
@@ -70,7 +70,7 @@ function Skills() {
       await api.delete(`/skills/me/${id}`);
       load();
     } catch (err) {
-      setError(err.response?.data?.message || "Delete nahi hua");
+      setError(err.response?.data?.message || "Could not delete");
     }
   };
 

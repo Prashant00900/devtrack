@@ -9,7 +9,7 @@ function GoogleButton({ onCredential, onError }) {
       <div className="flex justify-center">
         <GoogleLogin
           onSuccess={(res) => onCredential(res.credential)}
-          onError={() => onError("Google login cancel ya fail ho gaya")}
+          onError={() => onError("Google login was cancelled or failed")}
           theme="filled_black"
           shape="rectangular"
           text="continue_with"

@@ -15,7 +15,7 @@ function Overview() {
       .get("/admin/stats")
       .then((res) => setData(res.data))
       .catch((err) =>
-        setError(err.response?.data?.message || "Stats load nahi hui")
+        setError(err.response?.data?.message || "Could not load stats")
       );
   }, []);
 
@@ -56,7 +56,7 @@ function Overview() {
         <div className={cardClass}>
           <h2 className="font-semibold mb-4">Most added skills</h2>
           {data.topSkills.length === 0 ? (
-            <p className="text-sm text-slate-400">Abhi data nahi hai.</p>
+            <p className="text-sm text-slate-400">No data yet.</p>
           ) : (
             <div className="space-y-3">
               {data.topSkills.map((t) => (
@@ -114,7 +114,7 @@ function Users() {
       setUsers(res.data.users);
       setError("");
     } catch (err) {
-      setError(err.response?.data?.message || "Users load nahi hue");
+      setError(err.response?.data?.message || "Could not load users");
     } finally {
       setLoading(false);
     }
@@ -129,17 +129,17 @@ function Users() {
       await api.put(`/admin/users/${id}/role`, { role });
       load(search);
     } catch (err) {
-      setError(err.response?.data?.message || "Role update nahi hua");
+      setError(err.response?.data?.message || "Could not update the role");
     }
   };
 
   const removeUser = async (u) => {
-    if (!window.confirm(`${u.email} aur uska saara data delete ho jayega. Pakka?`)) return;
+    if (!window.confirm(`${u.email} and all their data will be deleted. Are you sure?`)) return;
     try {
       await api.delete(`/admin/users/${u.id}`);
       load(search);
     } catch (err) {
-      setError(err.response?.data?.message || "Delete nahi hua");
+      setError(err.response?.data?.message || "Could not delete");
     }
   };
 
@@ -259,7 +259,7 @@ function Resources() {
       setSkills(s.data.skills);
       setResources(r.data.resources);
     } catch (err) {
-      setError(err.response?.data?.message || "Resources load nahi hue");
+      setError(err.response?.data?.message || "Could not load resources");
     }
   };
 
@@ -276,10 +276,10 @@ function Resources() {
     try {
       await api.post("/admin/resources", form);
       setForm({ skillId: "", title: "", url: "", type: "docs" });
-      setMessage("Link add ho gaya ✅");
+      setMessage("Link added ✅");
       load();
     } catch (err) {
-      setError(err.response?.data?.message || "Add nahi hua");
+      setError(err.response?.data?.message || "Could not add");
     }
   };
 
@@ -288,7 +288,7 @@ function Resources() {
       await api.delete(`/admin/resources/${id}`);
       load();
     } catch (err) {
-      setError(err.response?.data?.message || "Delete nahi hua");
+      setError(err.response?.data?.message || "Could not delete");
     }
   };
 
@@ -297,10 +297,10 @@ function Resources() {
     setError("");
     try {
       const res = await api.post("/admin/resources/seed-defaults");
-      setMessage(`${res.data.added} naye default links add hue`);
+      setMessage(`${res.data.added} new default links added`);
       load();
     } catch (err) {
-      setError(err.response?.data?.message || "Seed nahi hua");
+      setError(err.response?.data?.message || "Could not load default links");
     }
   };
 
@@ -321,7 +321,7 @@ function Resources() {
         <div>
           <p className="font-semibold">Default learning links</p>
           <p className="text-sm text-slate-400">
-            Har skill ke liye starter links ek click mein add karo. Dobara dabane se duplicate nahi banenge.
+            Add starter links for every skill in one click. Clicking again will not create duplicates.
           </p>
         </div>
         <button
@@ -419,7 +419,7 @@ function Resources() {
             {resources.length === 0 && (
               <tr>
                 <td colSpan={4} className="px-4 py-6 text-center text-slate-400">
-                  Koi link nahi hai. "Load default links" dabao.
+                  No links yet. Click "Load default links".
                 </td>
               </tr>
             )}

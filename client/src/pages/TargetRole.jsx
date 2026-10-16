@@ -17,7 +17,7 @@ function TargetRole() {
         setRoles(r.data.roles);
         if (t.data.role) setSelectedId(t.data.role._id);
       } catch {
-        setError("Roles load nahi hue");
+        setError("Could not load roles");
       }
     };
     load();
@@ -30,7 +30,7 @@ function TargetRole() {
       await api.put("/roles/target", { roleId: selectedId });
       setMessage("Target role saved ✅");
     } catch (err) {
-      setError(err.response?.data?.message || "Save nahi hua");
+      setError(err.response?.data?.message || "Could not save");
     }
   };
 
@@ -49,7 +49,7 @@ function TargetRole() {
           onChange={(e) => setSelectedId(e.target.value)}
           className="flex-1 p-2 rounded bg-slate-700 outline-none"
         >
-          <option value="">Role choose karo</option>
+          <option value="">Choose a role</option>
           {roles.map((r) => (
             <option key={r._id} value={r._id}>
               {r.title}

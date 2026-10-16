@@ -32,7 +32,7 @@ function Tracker() {
       });
       setData(res.data);
     } catch {
-      setError("Tracker load nahi hua");
+      setError("Could not load the tracker");
     } finally {
       setLoading(false);
     }
@@ -57,7 +57,7 @@ function Tracker() {
     try {
       await api.post("/tracker/toggle", { topicId: topic.id });
     } catch {
-      setError("Update nahi hua");
+      setError("Could not update");
     }
     load();
   };
@@ -67,7 +67,7 @@ function Tracker() {
   if (!data) {
     return (
       <p className="bg-red-500/10 border border-red-500/30 text-red-300 p-3 rounded-lg">
-        {error || "Kuch galat hua"}
+        {error || "Something went wrong"}
       </p>
     );
   }
