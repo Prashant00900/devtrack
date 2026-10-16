@@ -12,32 +12,50 @@ const features = [
   {
     icon: "🧭",
     title: "Learning Roadmap",
-    desc: "An ordered plan of what to learn first, with progress tracking you can tick off.",
+    desc: "An ordered plan of what to learn first, with progress you can tick off.",
     tint: "bg-green-500/15",
+  },
+  {
+    icon: "📚",
+    title: "Learning Hub",
+    desc: "Pick any skill and get direct links to learn it, recommended from your gaps.",
+    tint: "bg-purple-500/15",
+  },
+  {
+    icon: "📄",
+    title: "Resume Analyzer",
+    desc: "Upload your resume to get an ATS-style score, missing skills and tips to improve.",
+    tint: "bg-orange-500/15",
+  },
+  {
+    icon: "🎤",
+    title: "AI Mock Interview",
+    desc: "Practise HR or technical rounds by voice or text and get a report on what to fix.",
+    tint: "bg-pink-500/15",
+  },
+  {
+    icon: "💬",
+    title: "English Coach",
+    desc: "Chat with an AI coach that corrects your mistakes and shows a better sentence.",
+    tint: "bg-teal-500/15",
+  },
+  {
+    icon: "🔥",
+    title: "Skill Tracker",
+    desc: "Track DSA, OS, DBMS, OOPS and Networks topics and keep a daily streak.",
+    tint: "bg-red-500/15",
   },
   {
     icon: "🐙",
     title: "GitHub & LinkedIn",
-    desc: "Your repos, languages and weekly activity from GitHub, plus your LinkedIn profile.",
-    tint: "bg-purple-500/15",
-  },
-  {
-    icon: "🗺️",
-    title: "Project-to-Skill Map",
-    desc: "Skills used in your projects are mapped to your profile in one click.",
-    tint: "bg-orange-500/15",
+    desc: "See your repos, languages and weekly activity from GitHub, plus your LinkedIn card.",
+    tint: "bg-indigo-500/15",
   },
   {
     icon: "🚀",
     title: "Promotion Readiness",
     desc: "See how ready you are for the next level, from Student all the way to Senior.",
-    tint: "bg-pink-500/15",
-  },
-  {
-    icon: "✨",
-    title: "AI Career Analysis",
-    desc: "A summary, strengths, next steps, project ideas and interview tips for your goal.",
-    tint: "bg-teal-500/15",
+    tint: "bg-yellow-500/15",
   },
 ];
 
@@ -72,7 +90,7 @@ const steps = [
   {
     icon: "👤",
     title: "Sign up free",
-    desc: "Create your account in seconds. No credit card needed.",
+    desc: "Use your Google account or email. No credit card needed.",
   },
   {
     icon: "🛠️",
@@ -81,8 +99,8 @@ const steps = [
   },
   {
     icon: "🎯",
-    title: "Get your plan",
-    desc: "See your match score, your gaps and a roadmap of what to learn next.",
+    title: "Prepare and improve",
+    desc: "Analyse your resume, practise mock interviews and follow your roadmap.",
   },
 ];
 
@@ -95,6 +113,8 @@ const stack = [
   "Express",
   "MongoDB",
   "JWT",
+  "Google OAuth",
+  "Gemini API",
   "GitHub API",
 ];
 
@@ -108,8 +128,16 @@ const faqs = [
     a: "Every role has required skills with a minimum level. Each skill scores min(your level / required level, 1). Must-have skills count double, and the match is the weighted average.",
   },
   {
-    q: "Do I need an API key for the AI analysis?",
-    a: "No. The analysis works out of the box with a built-in rule-based engine. When an AI API key is configured on the server, it upgrades to AI-written advice.",
+    q: "Which features use AI?",
+    a: "The mock interview and the English coach use AI (Google Gemini). The gap analysis, roadmap and resume analyzer work without AI.",
+  },
+  {
+    q: "Is my resume stored?",
+    a: "No. Your resume is analysed once and is not saved.",
+  },
+  {
+    q: "Can I sign in with Google?",
+    a: "Yes. You can use your Google account or email and password. If you forget your password, use the Forgot password link to get a reset email.",
   },
   {
     q: "Which roles are supported?",
@@ -212,7 +240,7 @@ function Landing() {
         {/* Hero */}
         <section className="max-w-4xl mx-auto text-center px-4 sm:px-6 pt-20 pb-16">
           <span className="inline-flex items-center gap-2 border border-white/15 bg-white/5 rounded-full px-4 py-1.5 text-sm text-slate-300">
-            ⭐ Developer Career Intelligence Platform
+            ⭐ Career preparation platform
           </span>
 
           <h1 className="mt-8 text-4xl sm:text-6xl font-bold leading-tight">
@@ -224,8 +252,8 @@ function Landing() {
           </h1>
 
           <p className="mt-6 text-lg text-slate-400 max-w-2xl mx-auto">
-            Track your skills, projects and GitHub activity in one place. DevTrack compares
-            you with your target role and tells you exactly what to learn next.
+            Track your skills, analyse your resume, practise AI mock interviews and follow
+            a roadmap built for your target role.
           </p>
 
           <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
@@ -245,9 +273,9 @@ function Landing() {
 
           <div className="mt-16 grid grid-cols-2 md:grid-cols-4 gap-4">
             {[
-              { value: "13", label: "Features" },
+              { value: "15+", label: "Features" },
               { value: "100%", label: "Free to use" },
-              { value: "1-5", label: "Skill levels" },
+              { value: "AI", label: "Mock interviews" },
               { value: "Live", label: "GitHub data" },
             ].map((s) => (
               <div key={s.label} className={`${cardClass} py-6`}>
@@ -262,10 +290,10 @@ function Landing() {
         <section id="features" className="max-w-6xl mx-auto px-4 sm:px-6 py-16">
           <div className="text-center mb-12">
             <h2 className="text-3xl sm:text-4xl font-bold">
-              Everything you need to <span className={gradientText}>grow</span>
+              Everything you need to <span className={gradientText}>get placed</span>
             </h2>
             <p className="text-slate-400 mt-3">
-              Built for students and working developers who want a clear career plan.
+              Built for students and working developers who want a clear plan.
             </p>
           </div>
 
