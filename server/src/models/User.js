@@ -39,6 +39,9 @@ const userSchema = new mongoose.Schema(
       enum: ["student", "employee"],
       default: "student",
     },
+    // Password reset (token ka hash store hota hai, asli token nahi)
+    resetPasswordToken: { type: String, select: false },
+    resetPasswordExpires: { type: Date, select: false },
   },
   { timestamps: true }
 );

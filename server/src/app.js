@@ -21,6 +21,9 @@ import englishRoutes from "./routes/englishRoutes.js";
 
 const app = express();
 
+// Render proxy ke peeche hai, isliye asli user ka IP chahiye (rate limit ke liye)
+app.set("trust proxy", 1);
+
 const allowedOrigins = [process.env.CLIENT_URL, "http://localhost:5173"].filter(Boolean);
 
 app.use(
