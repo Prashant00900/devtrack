@@ -31,7 +31,6 @@ function Overview() {
   const stats = [
     ["👥", "Total users", data.users],
     ["🆕", "New (7 days)", data.newUsers],
-    ["🔵", "Google signups", data.googleUsers],
     ["📁", "Projects", data.projects],
     ["🏅", "Certifications", data.certifications],
     ["🛠️", "Skill entries", data.skillEntries],
@@ -180,7 +179,6 @@ function Users() {
             <thead>
               <tr className="text-left text-slate-400 border-b border-slate-800">
                 <th className="px-4 py-3 font-medium">User</th>
-                <th className="px-4 py-3 font-medium">Login</th>
                 <th className="px-4 py-3 font-medium">Joined</th>
                 <th className="px-4 py-3 font-medium">Role</th>
                 <th className="px-4 py-3" />
@@ -196,17 +194,6 @@ function Users() {
                         {u.name} {isMe && <span className="text-xs text-blue-400">(you)</span>}
                       </p>
                       <p className="text-xs text-slate-400">{u.email}</p>
-                    </td>
-                    <td className="px-4 py-3">
-                      <span
-                        className={`text-xs px-2 py-1 rounded-full ${
-                          u.provider === "google"
-                            ? "bg-blue-500/15 text-blue-300"
-                            : "bg-slate-800 text-slate-300"
-                        }`}
-                      >
-                        {u.provider}
-                      </span>
                     </td>
                     <td className="px-4 py-3 text-slate-400">
                       {new Date(u.createdAt).toLocaleDateString()}

@@ -2,10 +2,9 @@ import { useState } from "react";
 import { Link, Navigate, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import AuthLayout from "../components/AuthLayout";
-import GoogleButton from "../components/GoogleButton";
 
 function Login() {
-  const { user, login, googleLogin } = useAuth();
+  const { user, login } = useAuth();
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -30,16 +29,6 @@ function Login() {
     }
   };
 
-  const handleGoogle = async (credential) => {
-    setError("");
-    try {
-      await googleLogin(credential);
-      navigate("/dashboard");
-    } catch (err) {
-      setError(err.response?.data?.message || "Google login failed");
-    }
-  };
-
   const inputClass =
     "w-full px-3 py-2.5 rounded-lg bg-slate-900 border border-slate-700 focus:border-blue-500 outline-none";
 
@@ -48,15 +37,13 @@ function Login() {
       title="Welcome back"
       subtitle="Login to continue tracking your career."
     >
-      {error && (
-        <p className="bg-red-500/10 border border-red-500/30 text-red-300 text-sm p-3 rounded-lg mb-4">
-          {error}
-        </p>
-      )}
-
-      <GoogleButton onCredential={handleGoogle} onError={setError} />
-
       <form onSubmit={handleSubmit} className="space-y-4">
+        {error && (
+          <p className="bg-red-500/10 border border-red-500/30 text-red-300 text-sm p-3 rounded-lg">
+            {error}
+          </p>
+        )}
+
         <div>
           <label className="block text-sm text-slate-300 mb-1">Email</label>
           <input

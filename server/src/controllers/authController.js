@@ -1,5 +1,4 @@
 import crypto from "crypto";
-import { OAuth2Client } from "google-auth-library";
 import User from "../models/User.js";
 import generateToken from "../utils/generateToken.js";
 import { sendEmail, emailConfigured } from "../services/emailService.js";
@@ -17,7 +16,6 @@ const userResponse = (user) => ({
   email: user.email,
   role: user.role,
   mode: user.mode,
-  avatar: user.avatar || "",
 });
 
 // POST /api/auth/register
@@ -60,10 +58,10 @@ export const loginUser = async (req, res) => {
       return res.status(401).json({ message: "Invalid email or password" });
     }
 
+    // Purane accounts jo pehle Google se bane the, unka password nahi hota
     if (!user.password) {
       return res.status(400).json({
-        message:
-          "This account was created with Google. Use 'Continue with Google', or use 'Forgot password' to set a password.",
+        message: "This account has no password yet. Use 'Forgot password' to set one.",
       });
     }
 
@@ -77,59 +75,6 @@ export const loginUser = async (req, res) => {
     });
   } catch (error) {
     res.status(500).json({ message: error.message });
-  }
-};
-
-// POST /api/auth/google
-export const googleLogin = async (req, res) => {
-  try {
-    const { credential } = req.body;
-
-    if (!credential) {
-      return res.status(400).json({ message: "Google credential is required" });
-    }
-
-    if (!process.env.GOOGLE_CLIENT_ID) {
-      return res.status(500).json({ message: "Google login is not configured on the server" });
-    }
-
-    // Google ka token backend par verify hota hai, frontend par bharosa nahi karte
-    const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
-    const ticket = await client.verifyIdToken({
-      idToken: credential,
-      audience: process.env.GOOGLE_CLIENT_ID,
-    });
-    const payload = ticket.getPayload();
-
-    if (!payload?.email || !payload.email_verified) {
-      return res.status(401).json({ message: "Google email is not verified" });
-    }
-
-    const email = payload.email.toLowerCase();
-
-    let user = await User.findOne({ $or: [{ googleId: payload.sub }, { email }] });
-
-    if (!user) {
-      user = await User.create({
-        name: payload.name || email.split("@")[0],
-        email,
-        googleId: payload.sub,
-        avatar: payload.picture || "",
-      });
-    } else if (!user.googleId) {
-      // Pehle se password wala account hai, uspar Google jod do
-      user.googleId = payload.sub;
-      if (!user.avatar && payload.picture) user.avatar = payload.picture;
-      await user.save();
-    }
-
-    res.json({
-      token: generateToken(user._id),
-      user: userResponse(user),
-    });
-  } catch (error) {
-    console.error("Google login error:", error.message);
-    res.status(401).json({ message: "Google login failed. Please try again." });
   }
 };
 
@@ -162,7 +107,7 @@ export const forgotPassword = async (req, res) => {
         // Local testing: email set nahi hai to link terminal mein dikhao
         console.log("Password reset link (email is not configured):", link);
       } else {
-        // await nahi kiya, taaki response ka time same rahe (email exist karta hai ya nahi, pata na chale)
+        // await nahi kiya, taaki response ka time same rahe
         sendEmail({
           to: user.email,
           subject: "Reset your DevTrack password",

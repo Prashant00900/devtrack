@@ -15,20 +15,12 @@ const userSchema = new mongoose.Schema(
       lowercase: true,
       trim: true,
     },
-    // Google se bane users ka password nahi hota
     password: {
       type: String,
-      required: [
-        function () {
-          return !this.googleId;
-        },
-        "Password is required",
-      ],
+      required: [true, "Password is required"],
       minlength: [6, "Password must be at least 6 characters"],
       select: false,
     },
-    googleId: { type: String, unique: true, sparse: true },
-    avatar: { type: String, default: "" },
     role: {
       type: String,
       enum: ["developer", "mentor", "admin"],

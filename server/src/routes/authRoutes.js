@@ -2,7 +2,6 @@ import express from "express";
 import {
   registerUser,
   loginUser,
-  googleLogin,
   forgotPassword,
   resetPassword,
   getMe,
@@ -26,7 +25,6 @@ const resetLimiter = createLimiter({
 
 router.post("/register", registerUser);
 router.post("/login", loginUser);
-router.post("/google", googleLogin);
 router.post("/forgot-password", forgotLimiter, forgotPassword);
 router.post("/reset-password", resetLimiter, resetPassword);
 router.get("/me", protect, getMe);

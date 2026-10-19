@@ -20,7 +20,6 @@ export const getStats = async (req, res) => {
 
     const [
       users,
-      googleUsers,
       newUsers,
       projects,
       certifications,
@@ -29,7 +28,6 @@ export const getStats = async (req, res) => {
       topAgg,
     ] = await Promise.all([
       User.countDocuments(),
-      User.countDocuments({ googleId: { $exists: true, $ne: null } }),
       User.countDocuments({ createdAt: { $gte: since } }),
       Project.countDocuments(),
       Certification.countDocuments(),
@@ -53,7 +51,6 @@ export const getStats = async (req, res) => {
 
     res.json({
       users,
-      googleUsers,
       newUsers,
       projects,
       certifications,
@@ -82,7 +79,7 @@ export const getUsers = async (req, res) => {
     const users = await User.find(filter)
       .sort({ createdAt: -1 })
       .limit(100)
-      .select("name email role googleId createdAt");
+      .select("name email role createdAt");
 
     res.json({
       users: users.map((u) => ({
@@ -90,7 +87,6 @@ export const getUsers = async (req, res) => {
         name: u.name,
         email: u.email,
         role: u.role,
-        provider: u.googleId ? "google" : "password",
         createdAt: u.createdAt,
       })),
     });

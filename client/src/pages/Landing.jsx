@@ -90,7 +90,7 @@ const steps = [
   {
     icon: "👤",
     title: "Sign up free",
-    desc: "Use your Google account or email. No credit card needed.",
+    desc: "Create your account with your email. No credit card needed.",
   },
   {
     icon: "🛠️",
@@ -113,7 +113,6 @@ const stack = [
   "Express",
   "MongoDB",
   "JWT",
-  "Google OAuth",
   "Gemini API",
   "GitHub API",
 ];
@@ -136,8 +135,8 @@ const faqs = [
     a: "No. Your resume is analysed once and is not saved.",
   },
   {
-    q: "Can I sign in with Google?",
-    a: "Yes. You can use your Google account or email and password. If you forget your password, use the Forgot password link to get a reset email.",
+    q: "What if I forget my password?",
+    a: "Use the Forgot password link on the login page. We email you a one-time reset link that works for 15 minutes.",
   },
   {
     q: "Which roles are supported?",
